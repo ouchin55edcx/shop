@@ -1,5 +1,6 @@
 package com.shop.shop.controller;
 
+import com.shop.shop.HelloApplication;
 import com.shop.shop.dao.ProductDAO;
 import com.shop.shop.model.Product;
 import javafx.fxml.FXML;
@@ -11,6 +12,7 @@ import java.util.List;
 
 public class CatalogController {
     private static final int ITEMS_PER_PAGE = 12;
+    private HelloApplication mainApplication;
 
     @FXML private FlowPane productGrid;
     @FXML private ComboBox<String> categoryFilter;
@@ -24,6 +26,10 @@ public class CatalogController {
         setupCategoryFilter();
         setupPagination();
         loadPage(1);
+    }
+
+    public void setMainApplication(HelloApplication mainApplication) {
+        this.mainApplication = mainApplication;
     }
 
     private void setupCategoryFilter() {
@@ -65,6 +71,8 @@ public class CatalogController {
     private VBox createProductCard(Product product) {
         VBox card = new VBox(10);
         card.getStyleClass().add("product-card");
+        card.setOnMouseClicked(e -> handleProductClick(product));
+
 
         ImageView imageView = new ImageView(new Image(product.getImageUrl()));
         imageView.setFitWidth(200);
@@ -85,6 +93,13 @@ public class CatalogController {
         int pageCount = (int) Math.ceil((double) totalItems / ITEMS_PER_PAGE);
         pagination.setPageCount(pageCount);
     }
+
+    private void handleProductClick(Product product) {
+        if (mainApplication != null) {
+            mainApplication.showProductDetail(product.getId());
+        }
+    }
+
 
     @FXML
     private void handleSearch() {

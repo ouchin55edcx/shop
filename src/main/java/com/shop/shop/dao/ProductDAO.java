@@ -73,4 +73,57 @@ public class ProductDAO {
         }
         return 0;
     }
+
+    public Product getProductById(int productId) {
+        String query = "SELECT * FROM products WHERE id = ?";
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setInt(1, productId);
+            ResultSet rs = stmt.executeQuery();
+
+            if(rs.next()) {
+                return new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock"),
+                        rs.getString("category"),
+                        rs.getString("image_url")
+                );
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching product", e);
+        }
+        return null;
+    }
+
+    public List<Product> getRelatedProducts(String category, int excludeId) {
+        String query = "SELECT * FROM products WHERE category = ? AND id != ? LIMIT 4";
+        List<Product> related = new ArrayList<>();
+
+        try (Connection conn = DBConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+
+            stmt.setString(1, category);
+            stmt.setInt(2, excludeId);
+            ResultSet rs = stmt.executeQuery();
+
+            while(rs.next()) {
+                related.add(new Product(
+                        rs.getInt("id"),
+                        rs.getString("name"),
+                        rs.getString("description"),
+                        rs.getDouble("price"),
+                        rs.getInt("stock"),
+                        rs.getString("category"),
+                        rs.getString("image_url")
+                ));
+            }
+        } catch (SQLException e) {
+            logger.log(Level.SEVERE, "Error fetching related products", e);
+        }
+        return related;
+    }
 }
