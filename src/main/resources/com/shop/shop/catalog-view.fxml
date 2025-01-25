@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.cell.PropertyValueFactory?>
+
+<VBox xmlns:fx="http://javafx.com/fxml"
+      fx:controller="com.shop.shop.controller.CatalogController"
+      spacing="10" alignment="CENTER"
+      prefWidth="600">
+
+    <TableView fx:id="productTable">
+        <columns>
+            <TableColumn text="ID" prefWidth="50">
+                <cellValueFactory>
+                    <PropertyValueFactory property="id" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Name" prefWidth="150">
+                <cellValueFactory>
+                    <PropertyValueFactory property="name" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Description" prefWidth="250">
+                <cellValueFactory>
+                    <PropertyValueFactory property="description" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Price" prefWidth="100">
+                <cellValueFactory>
+                    <PropertyValueFactory property="price" />
+                </cellValueFactory>
+            </TableColumn>
+            <TableColumn text="Stock" prefWidth="50">
+                <cellValueFactory>
+                    <PropertyValueFactory property="stock" />
+                </cellValueFactory>
+            </TableColumn>
+        </columns>
+    </TableView>
+</VBox>
