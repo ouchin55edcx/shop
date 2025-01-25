@@ -1,40 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
-<?import javafx.scene.control.cell.PropertyValueFactory?>
+<?import javafx.scene.image.*?>
 
-<VBox xmlns:fx="http://javafx.com/fxml"
+<?import javafx.geometry.Insets?>
+<VBox xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="com.shop.shop.controller.CatalogController"
-      spacing="10" alignment="CENTER"
-      prefWidth="600">
+      stylesheets="@styles.css"
+      spacing="20" alignment="TOP_CENTER"
+      prefWidth="800" prefHeight="600">
 
-    <TableView fx:id="productTable">
-        <columns>
-            <TableColumn text="ID" prefWidth="50">
-                <cellValueFactory>
-                    <PropertyValueFactory property="id" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Name" prefWidth="150">
-                <cellValueFactory>
-                    <PropertyValueFactory property="name" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Description" prefWidth="250">
-                <cellValueFactory>
-                    <PropertyValueFactory property="description" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Price" prefWidth="100">
-                <cellValueFactory>
-                    <PropertyValueFactory property="price" />
-                </cellValueFactory>
-            </TableColumn>
-            <TableColumn text="Stock" prefWidth="50">
-                <cellValueFactory>
-                    <PropertyValueFactory property="stock" />
-                </cellValueFactory>
-            </TableColumn>
-        </columns>
-    </TableView>
+    <HBox spacing="20" alignment="CENTER">
+        <ComboBox fx:id="categoryFilter" prefWidth="200"/>
+        <TextField fx:id="searchField" prefWidth="300" promptText="Search products..."/>
+        <Button text="Search" onAction="#handleSearch"/>
+    </HBox>
+
+    <FlowPane fx:id="productGrid"
+              hgap="20" vgap="20"
+              prefWrapLength="780">
+        <padding>
+            <Insets top="20" right="20" bottom="20" left="20"/>
+        </padding>
+    </FlowPane>
+    <Pagination fx:id="pagination"
+                maxPageIndicatorCount="5"
+                HBox.hgrow="ALWAYS"/>
+
 </VBox>
